@@ -122,9 +122,9 @@ public class BeforeAfter {
 			LOG.info("Cenário Executado - "  + scenario.getName() + " - " + scenario.getStatus() + " - " + dateHour[1] + " - " + dateHour[0]);
 			ValuesDateLog.setDataFinal(new Date().toString());
 			LOG.info(ValuesDateLog.getDataFinal());
-			GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(), Json.getStatusScenario(), scenario.getName(), SaveResultTestCase.getDirAudio());
-			SaveResultTestCase.finalizaBD(scenario);
-			SaveResultTestCase.finalizarJson(scenario);
+//			GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(), Json.getStatusScenario(), scenario.getName(), SaveResultTestCase.getDirAudio());
+//			SaveResultTestCase.finalizaBD(scenario);
+//			SaveResultTestCase.finalizarJson(scenario);
 		// }
 		LOG.info("END ------------------------------------------------------------------------------------------------>>\n");
 	}

@@ -20,9 +20,9 @@ public class Massa extends ErrorReport {
 	private String id;
 
 	public Massa(String translatedText, String id, String scenario) {
-		this.translatedText = translatedText.toLowerCase().trim();
-		this.scenario = scenario.toLowerCase().trim();
-		this.id = id;
+//		this.translatedText = translatedText.toLowerCase().trim();
+//		this.scenario = scenario.toLowerCase().trim();
+//		this.id = id;
 	}
 	
 	/**

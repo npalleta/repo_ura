@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.PageFactory;
 
 import br.com.rsi.ura.chrome.ConnectionDriver;
+import br.com.rsi.ura.chrome.Driver;
 import br.com.rsi.ura.chrome.PageObjectDialerWEB;
 
 public class UtilsWeb extends ConnectionDriver {
@@ -49,13 +50,14 @@ public class UtilsWeb extends ConnectionDriver {
 			click(getPageDialerWeb().btnBanner());
 		}
 	}
-	
+	PageObjectDialerWEB pageWeb = new PageObjectDialerWEB();
 	/**
 	 * @category Resposável por clicar no teclado da ligação do JIVE.
 	 */
 	public void clicarTeclado() {
 		LOG.info("Clico no menu do teclado chamada...");
-		isNotPresentAndClick(By.xpath("//div[@class='dial-pad-keys']"), getPageDialerWeb().btnKeyboard());
+		getDriver().findElement(pageWeb.btnKeyboard()).click();
+//		isNotPresentAndClick(By.xpath("//div[@class='dial-pad-keys']"), getPageDialerWeb().btnKeyboard());
 	}
 	
 	/**

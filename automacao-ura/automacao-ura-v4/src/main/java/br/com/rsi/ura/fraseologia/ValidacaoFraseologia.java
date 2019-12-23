@@ -52,15 +52,15 @@ public class ValidacaoFraseologia {
 			result = captureAndSpeechRecognitionFacadeService.captureAndSpeechRecognition(timeout);
 			SaveResultTestCase.setDirAudio(result.getCapturedAudioFile().getAbsolutePath());
 			
-			if(result.getRecognitedText().contains("ERROR")) {
-				LOG.info("<RE_TEST> --- <TIME OUT>");
-				RelatorioValues.setTipoErro("RE_TEST");
-				RelatorioValues.setErro("Time Out -- Intermitência na Internet");
-				UtilsUra.falhou();
-			} else {
-				Massa.vdn(result.getRecognitedText());
-				new ErrorReport(result.getRecognitedText(), PlanilhaDTO.getIdCenario(), PlanilhaDTO.getNomeCenario());
-			}
+//			if(result.getRecognitedText().contains("ERROR")) {
+//				LOG.info("<RE_TEST> --- <TIME OUT>");
+//				RelatorioValues.setTipoErro("RE_TEST");
+//				RelatorioValues.setErro("Time Out -- Intermitência na Internet");
+//				UtilsUra.falhou();
+//			} else {
+//				Massa.vdn(result.getRecognitedText());
+//				new ErrorReport(result.getRecognitedText(), PlanilhaDTO.getIdCenario(), PlanilhaDTO.getNomeCenario());
+//			}
 			LOG.info(String.format("====Texto Traduzido====[%s]", result.getRecognitedText()));
 			LOG.info("========================================================================================================");
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class ValidacaoFraseologia {
 			LOG.info(String.format(">>>>>Texto Esperado>>>>[%s]", textoEsperado));
 			LOG.info(String.format("====Texto Traduzido====[%s]", result.getRecognitedText()));
 			
-			if (testePassou && textoEsperado.contains("você está") || ((!testePassou) && textoEsperado.contains("você está"))) {
+			if (testePassou && textoEsperado.contains("você ligou") || ((!testePassou) && textoEsperado.contains("você ligou"))) {
 
 				String codigo = UtilsUra.localizarIdLog(result.getRecognitedText());
 				if (codigo != "" && numeroTranscricoesCorte != null) {

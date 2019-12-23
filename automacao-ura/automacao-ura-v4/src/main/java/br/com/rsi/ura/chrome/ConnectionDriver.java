@@ -35,7 +35,7 @@ public class ConnectionDriver extends Driver {
 				"--reduce-security-for-testing", 
 				"--start-maximized",
 				"--use-fake-ui-for-media-stream");
-		System.setProperty("webdriver.chrome.driver", "C:\\UraSantander\\properties\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\dev\\drivers\\chromedriver.exe");
 
 		setDriver(new ChromeDriver(chromeOptions));
 		getDriver().manage().window().maximize();

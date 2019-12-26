@@ -64,7 +64,7 @@ public class SantanderUraLogic extends ConnectionDriver {
 	}
 	
 	public void clicarDiscadorCelularThreads(String num) {
-		texto = recLogic.fraseologia(10000);
+		texto = recLogic.fraseologia(80000);
 		LOG.info("\n\n[" + texto + "]\nDigito | " + num + " |\n");
 		utilsWebSantander.clicarDiscadorCelular(num);
 	}
@@ -126,7 +126,7 @@ public class SantanderUraLogic extends ConnectionDriver {
 
 	public void inicializaRelatorioDeDados() {
 		SaveResultTestCase.rodouSim();
-		new UtilsUra().inicializaArquivoDeDados();
+		// new UtilsUra().inicializaArquivoDeDados();
 	}
 
 	public void realizaLigacao() {

@@ -1,17 +1,20 @@
 package br.com.rsi.ura.utils;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import br.com.rsi.ura.chrome.ConnectionDriver;
 import br.com.rsi.ura.chrome.PageObjectDialerWEB;
 
 public class UtilsWeb extends ConnectionDriver {
-	
+
 	private final Logger LOG = Logger.getLogger(UtilsWeb.class);
-	
+
 	/**
 	 * @param numero --> Número para realizar a ligação.
 	 * @category Responsável por realizar o caminho para o teclado VOIP.
@@ -25,20 +28,20 @@ public class UtilsWeb extends ConnectionDriver {
 		sendKeys(getPageDialerWeb().txtPassword(), "Asdfg.002");
 		click(getPageDialerWeb().btnSignIn());
 		isPresentAndClick(getPageDialerWeb().btnAceccpt());
-		
-		if(isVisibleSetTimeWait(getPageDialerWeb().loadingJive(), 10) && 
-			isVisibleSetTimeWait(getPageDialerWeb().btnBanner(), 5)) {
+
+		if (isVisibleSetTimeWait(getPageDialerWeb().loadingJive(), 10)
+				&& isVisibleSetTimeWait(getPageDialerWeb().btnBanner(), 5)) {
 			LOG.info("Refresh Jive...");
 			getDriver().navigate().refresh();
 		}
-		if(isVisibleSetTimeWait(getPageDialerWeb().popUp1(), 1)) {
-			LOG.info("Junping PopUp - 1 ...");
-			click(getPageDialerWeb().linkSkipPopUp1());
-			if(isVisibleSetTimeWait(getPageDialerWeb().popUp2(), 1)) {
-				LOG.info("Junping PopUp - 2 ...");
-				click(getPageDialerWeb().linkSkipPopUp2());
-			}
-		}
+		/*
+		 * if(isVisibleSetTimeWait(getPageDialerWeb().popUp1(), 1)) {
+		 * LOG.info("Junping PopUp - 1 ...");
+		 * click(getPageDialerWeb().linkSkipPopUp1());
+		 * if(isVisibleSetTimeWait(getPageDialerWeb().popUp2(), 1)) {
+		 * LOG.info("Junping PopUp - 2 ...");
+		 * click(getPageDialerWeb().linkSkipPopUp2()); } }
+		 */
 		click(getPageDialerWeb().menuDialer());
 		sendKeys(getPageDialerWeb().txtDialer(), numero);
 
@@ -49,15 +52,21 @@ public class UtilsWeb extends ConnectionDriver {
 			click(getPageDialerWeb().btnBanner());
 		}
 	}
-	
+
 	/**
 	 * @category Resposável por clicar no teclado da ligação do JIVE.
 	 */
 	public void clicarTeclado() {
 		LOG.info("Clico no menu do teclado chamada...");
-		isNotPresentAndClick(By.xpath("//div[@class='dial-pad-keys']"), getPageDialerWeb().btnKeyboard());
+		// isNotPresentAndClick(By.xpath("//*[@*='mobile-dial-pad-button']"),
+		// getPageDialerWeb().btnKeyboard());
+		// isNotPresentAndClick(By.xpath("//div[@class='dial-pad-keys']"),
+		// getPageDialerWeb().btnKeyboard());
+		PageObjectDialerWEB pageObjectDialerWEB = new PageObjectDialerWEB();
+		getDriver().findElement(pageObjectDialerWEB.btnKeyboard()).click();
+		// presentAndClick(By.xpath("//button[@id='dial-pad-button']"));
 	}
-	
+
 	/**
 	 * @category Resposável por finalizar a ligação.
 	 */
@@ -68,17 +77,33 @@ public class UtilsWeb extends ConnectionDriver {
 			getDriver().quit();
 		}
 	}
-	
+
+	@SuppressWarnings("null")
+	public WebElement searchElementUsingAttr(List<WebElement> elementos, String atributo) {
+		WebElement elemento = null;
+		if (!elementos.isEmpty() || !elementos.equals(null)) {
+			for (WebElement elementoLista : elementos) {
+				LOG.info(elemento.getClass().toString());
+				if (elementoLista.getAttribute("id").equals(atributo)) {
+					elemento = elementoLista;
+					break;
+				}
+				break;
+			}
+		}
+		return elemento;
+	}
+
 	/**
 	 * @param num --> String passada na linha do Gherkin.
 	 */
 	public void clicarDiscadorCelular(String num) {
 		UtilsUra.sleep(3000, "Digito o(s) " + num + " no teclado do VOIP");
 		JavascriptExecutor js = ((JavascriptExecutor) getDriver());
-		
-		if(getPageDialerWeb() == null)
+
+		if (getPageDialerWeb() == null)
 			setPageDialerWeb(PageFactory.initElements(getDriver(), PageObjectDialerWEB.class));
-		
+
 		for (char ch : num.toCharArray()) {
 			if (ch == '1') {
 				js.executeScript(getPageDialerWeb().btn1JS());

@@ -78,7 +78,7 @@ public class BeforeAfter {
 		LOG.info("---- Hora do inicio da Execução: " + dateHour[0] + " - " + dateHour[1] + " ----");
 		// LOG.info("---- Verificando se o cenário de ID " + id + " já rodou com sucesso... ----");
 		
-		// SaveResultTestCase.rodouNao();
+		SaveResultTestCase.rodouNao();
 		// boolean jaDeuCerto = GerenciadorDeRelatorioPorCenario.seraQueJaDeuCerto(id);
 		
 		/*if (jaDeuCerto) {
@@ -112,7 +112,8 @@ public class BeforeAfter {
 	@After
 	public void finish(Scenario scenario) {
 		LOG.info("---- FINALIZANDO APLICAÇÃO ----");
-		// if (SaveResultTestCase.getRodou()) {
+		if (SaveResultTestCase.getRodou()) {
+			LOG.info(">>>---" + SaveResultTestCase.getRodou());
 			Json.setStatusScenario((scenario.getStatus().equals("passed") ? true : false));
 			RelatorioValues.setDataHora("Data: " + dateHour[1] + " --Hr Inicio: " + dateHour[0]);
 			new UtilsWeb().finalizaLigacao();
@@ -122,10 +123,10 @@ public class BeforeAfter {
 			LOG.info("Cenário Executado - "  + scenario.getName() + " - " + scenario.getStatus() + " - " + dateHour[1] + " - " + dateHour[0]);
 			ValuesDateLog.setDataFinal(new Date().toString());
 			LOG.info(ValuesDateLog.getDataFinal());
-			GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(), Json.getStatusScenario(), scenario.getName(), SaveResultTestCase.getDirAudio());
+			// GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(), Json.getStatusScenario(), scenario.getName(), SaveResultTestCase.getDirAudio());
 			SaveResultTestCase.finalizaBD(scenario);
 			SaveResultTestCase.finalizarJson(scenario);
-		// }
+		}
 		LOG.info("END ------------------------------------------------------------------------------------------------>>\n");
 	}
 }

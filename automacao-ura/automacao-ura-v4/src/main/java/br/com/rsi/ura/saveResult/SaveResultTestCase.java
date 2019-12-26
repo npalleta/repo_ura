@@ -58,7 +58,7 @@ public final class SaveResultTestCase {
 			}
 			EscritorCSV escritorCSV = new EscritorCSV();
 			escritorCSV.escreverResultado(id, scenario.getName(), statu, dateHour[1], dateHour[0]);
-			SQLConnectionManager.salvaStatusExecucaoTabelaFuncionalidade(id, status, dateHour[1], dateHour[0]);
+			// SQLConnectionManager.salvaStatusExecucaoTabelaFuncionalidade(id, status, dateHour[1], dateHour[0]);
 		}
 	}
 	

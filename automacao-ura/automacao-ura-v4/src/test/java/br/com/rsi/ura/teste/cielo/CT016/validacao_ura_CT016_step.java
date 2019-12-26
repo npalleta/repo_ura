@@ -11,7 +11,7 @@ public class validacao_ura_CT016_step {
 		validUraCT016.insereNumeroEC(arg1);
 	}
 	
-	@When("^digito \"([^\"]*)\"$")
+	/* @When("^digito \"([^\"]*)\"$")
 	public void digito(String arg1) throws Throwable {
-	}
+	} */
 }

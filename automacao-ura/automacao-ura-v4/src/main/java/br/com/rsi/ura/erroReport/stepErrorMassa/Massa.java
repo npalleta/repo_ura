@@ -69,160 +69,160 @@ public class Massa extends ErrorReport {
 	 */
 	public void massa() {
 		// Caso peça o ID Santander
-		if (translatedText.contains("vou precisar") && translatedText.contains("código")
-				&& translatedText.contains("santander")) {
-			upResult(MASSA,
-					"A Massa está solicitando ID Santander -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
-					"<MASSA INVÁLIDA, SOLICITA ID SANTANDER>");
-		}
-		// Cartão bloqueado ou o CSO
-		if ((translatedText.contains("cartão de segurança online foi cancelado")
-				|| translatedText.contains("por excesso de tentativas"))
-				|| (translatedText.contains("bloqueada") && translatedText.contains("excesso de tentativas"))) {
-			upResult(MASSA, "O CSO foi cancelado ou o cartão está bloqueado -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<CARTÃO CANCELADO OU O CSO>");
-		}
-		// Caso o cenário não tenha nenhuma massa vinculada
-		if (idMassa == null || idMassa.isEmpty()) {
-			upResultMassa(MASSA, "Cenário com o ID: " + id + ", não possui nenhuma MASSA vinculada",
-					"<CENÁRIO NÃO POSSUI NENHUMA MASSA VINCULADA>");
-		}
-		// Nenhum favorecido cadastrado
-		if (scenario.contains("comfavorecidocadastrado")
-				|| scenario.contains("favorecidocadastrado") && (!scenario.contains("semfavorecidocadastrado"))) {
-			if (translatedText.contains("não possui nenhum") && translatedText.contains("favorecido")) {
-				upResult(MASSA, "Nenhum favorecido cadastrado para o CPF vinculado -- Texto Traduzido: '"
-						+ translatedText + "' -- CPF: " + cpf, "<NENHUM FAVORECIDO CADASTRADO>");
-			}
-		}
-		// Conta salário
-		if (translatedText.contains("você possui uma conta salário")) {
-			upResult(MASSA, "CPF vinculado possui uma conta salário -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<CPF POSSUI UMA CONTA SALÁRIO>");
-		}
-		// Van Gogh Direct
-		if (translatedText.contains("van gogh direct")) {
-			upResult(MASSA,
-					"Segmento errado Van Gogh Direct -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
-					"<SEGMENTO ERRADO -- VAN GOGH DIRECT>");
-		}
-		// Valida se o CPF vinculado possuí mais de uma conta, tanto corrente como
-		// poupança
-		if (!scenario.contains("clientecommaisdeumacontacorrente") && 
-			  !scenario.contains("clientecommultiplascontas") && 
-			  	!scenario.contains("clientenaocorrentista") && 
-			  	   !scenario.contains("clientecommaisdeumaconta") && 
-			  	     !scenario.contains("clientenãocorrentistaecommaisdeumacontapoupança") && 
-			  	       !scenario.contains("multiplascontascorrenteepoupança")
-		    ) {
-			if (translatedText.contains("possui") &&  translatedText.contains("mais de") && translatedText.contains("conta") 
-					&& (!translatedText.contains("cheques") && !translatedText.contains("compensados"))) {
-				upResult(
-						MASSA, "CPF com mais de uma conta-poupança ou conta-corrente -- Texto Tarduzido: '"
-								+ translatedText + "' -- CPF: " + cpf,
-						"<CPF COM MAIS DE UMA CONTA POUNPANÇA OU CORRENTE>");
-			}
-		}
-		// Se os cenários de pagamento de fatura não tiver nehuma fatura para pagamento
-		if ((scenario.contains("mínimoeototal") || 
-			 scenario.contains("minimoeototal") || 
-			  scenario.contains("minimodafatura") || 
-			   scenario.contains("mínimodafatura") || 
-			    scenario.contains("totaldafatura") || 
-			     scenario.contains("faturacartãodecrédito")) && (scenario.contains("consulta"))
-		   ) {
-			if (translatedText.contains("não possui nenhum saldo devedor para fatura") ||
-				 (translatedText.contains("não possui") && translatedText.contains("saldo devedor"))
-			   ) {
-				upResult(MASSA,
-						"CPF não possui nenhum saldo devedor para pagamento de fatura -- Texto Traduzido: '"
-								+ translatedText + "' -- CPF: " + cpf,
-						"<CPF NÃO POSSUI NENHUMA FATURA PARA PAGAMENTO>");
-
-			}
-		}
-		// Se o cenáriio for Select e não for verbalizado
-		if ((!translatedText.contains("select")) && scenario.contains("select")
-				&& translatedText.contains("agilizar o atendimento") && translatedText.contains("por favor")
-				&& (translatedText.contains("senha") || translatedText.contains("saldo"))
-				&& (!scenario.contains("clientenãocorrentista") && !scenario.contains("clientecommultiplascontas")
-						&& !scenario.contains("monoprodutista"))) {
-			upResult(MASSA, "Segmento errado, cenário vinculado é Select -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO É SELECT>");
-		}
-		// Se o cenáriio não for Select
-		if (translatedText.contains("select") && (!scenario.contains("select"))) {
-			upResult(MASSA, "Segmento errado, cenário vinculado NÃO é Select -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO NÃO É SELECT>");
-		}
-		// Se o cenáriio for Van Gogh e não for verbalizado
-		if ((!translatedText.contains("van gogh")) && scenario.contains("vangogh")
-				&& translatedText.contains("agilizar o atendimento") && translatedText.contains("por favor")
-				&& (translatedText.contains("senha") || translatedText.contains("saldo"))
-				&& (!scenario.contains("clientenãocorrentista") && !scenario.contains("clientecommultiplascontas")
-						&& !scenario.contains("monoprodutista"))) {
-			upResult(MASSA, "Segmento errado, cenário vinculado é Van Gogh -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO É VAN GOGH>");
-		}
-		// Se o cenáriio não for Van Gogh
-		if (translatedText.contains("vangogh") && (!scenario.contains("vangogh"))) {
-			upResult(MASSA, "Segmento errado, cenário vinculado NÃO é Van Gogh -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO NÃO É VAN GOGH>");
-		}
-		// Boleto inválido
-		if (translatedText.contains("não pode ser pago") || translatedText.contains("emissão de um novo boleto")) {
-			upResult(MASSA,
-					"Boleto inválido, verificar se o boleto está de acordo com a exigência do cenário -- Texto Traduzido: '"
-							+ translatedText + "' -- CPF: " + cpf,
-					"<NÃO FOI POSSÍVEL PAGAR O BOLETO>");
-		}
-		// Para os cenários de consulta fatura que não tiver fatura para consulta
-		if ((scenario.contains("consulta") && scenario.contains("fatura"))
-				&& (translatedText.contains("cartão de crédito") && 
-						translatedText.contains("não possui nenhum saldo devedor") && 
-							translatedText.contains("fatura"))
-		   ) {
-			upResult(MASSA, "Usuário sem fatura vinculado ao CPF ou fatura inválida para o teste -- Texto Traduzido: '"
-					+ translatedText + "' -- CPF: " + cpf, "<CPF SEM FATURA VINCULADA PARA CONSULTA>");
-		}
-		// Sem lançamentos para consulta de extrato
-		if (translatedText.contains("não encontrei lançamento")
-				&& ((scenario.contains("extratodoultimodia") || scenario.contains("extratoporperiodo")
-						|| scenario.contains("extratoporperíodo") || scenario.contains("consultaultimos7dias")))) {
-			upResult(MASSA, "Sem lançamentos na conta para consulta de extrato -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<CPF SEM LANÇAMENTOS PARA CONSULTA DE EXTRATO>");
-		}
-		// Para cenários de desbloqueio de cheque e ele não está bloqueado
-		if ((scenario.contains("desbloqueiodetalao") || scenario.contains("desbloqueartalaodecheques"))
-				&& ((translatedText.contains("talão de cheque") || translatedText.contains("pelo número"))
-						&& translatedText.contains("ele não está bloqueado"))) {
-			upResult(MASSA,
-					"Cheque vinculado não está bloqueado -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
-					"<CHEQUE NÃO ESTÁ BLOQUEADO>");
-		}
-
-		// Para cenários de consulta de cpf com e sem cheques compensados
-		if (scenario.contains("consulta") && (scenario.contains("chequescompensados"))) {
-			//consulta com cheques compensados
-			if ((scenario.contains("consulta")) && (scenario.contains("chequescompensados")) && 
-				  (!scenario.contains("semchequescompensados")) && 
-					 (translatedText.contains("não possui") || translatedText.contains("não foi compensado") || translatedText.contains("fazer outra consulta"))
-			   ) {
-				upResult(MASSA, "CPF vinculado não possui cheques compensados para consulta -- Texto Traduzido: '"
-						+ translatedText + "' -- CPF: " + cpf, "<NÃO POSSUI CHEQUES COMPENSADOS>");
-			}
-			// consulta sem cheques compensados
-			if ((scenario.contains("consulta")) && (scenario.contains("semchequescompensados"))
-					&& (translatedText.contains("você possui")) || (translatedText.contains("no valor de"))) {
-				upResult(MASSA, "CPF não pode ter cheque compensado -- Texto Traduzido: '"
-						+ translatedText + "' -- CPF: " + cpf, "<CPF POSSUI CHEQUES COMPENSADOS>");
-			}
-		}
-		// Para cenários que necessita que CPF não seja correntista
-		if ((scenario.contains("clientenãocorrentista") || scenario.contains("clientenaocorrentista"))
-				&& (translatedText.contains("sobre conta corrente") || translatedText.contains("conta corrente"))) {
-			upResult(MASSA, "Cenário necessita que o CPF não seja correntista -- Texto Traduzido: '" + translatedText
-					+ "' -- CPF: " + cpf, "<CPF POSSUI UMA CONTA CORRENTE>");
-		}
+//		if (translatedText.contains("vou precisar") && translatedText.contains("código")
+//				&& translatedText.contains("santander")) {
+//			upResult(MASSA,
+//					"A Massa está solicitando ID Santander -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
+//					"<MASSA INVÁLIDA, SOLICITA ID SANTANDER>");
+//		}
+//		// Cartão bloqueado ou o CSO
+//		if ((translatedText.contains("cartão de segurança online foi cancelado")
+//				|| translatedText.contains("por excesso de tentativas"))
+//				|| (translatedText.contains("bloqueada") && translatedText.contains("excesso de tentativas"))) {
+//			upResult(MASSA, "O CSO foi cancelado ou o cartão está bloqueado -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<CARTÃO CANCELADO OU O CSO>");
+//		}
+//		// Caso o cenário não tenha nenhuma massa vinculada
+//		if (idMassa == null || idMassa.isEmpty()) {
+//			upResultMassa(MASSA, "Cenário com o ID: " + id + ", não possui nenhuma MASSA vinculada",
+//					"<CENÁRIO NÃO POSSUI NENHUMA MASSA VINCULADA>");
+//		}
+//		// Nenhum favorecido cadastrado
+//		if (scenario.contains("comfavorecidocadastrado")
+//				|| scenario.contains("favorecidocadastrado") && (!scenario.contains("semfavorecidocadastrado"))) {
+//			if (translatedText.contains("não possui nenhum") && translatedText.contains("favorecido")) {
+//				upResult(MASSA, "Nenhum favorecido cadastrado para o CPF vinculado -- Texto Traduzido: '"
+//						+ translatedText + "' -- CPF: " + cpf, "<NENHUM FAVORECIDO CADASTRADO>");
+//			}
+//		}
+//		// Conta salário
+//		if (translatedText.contains("você possui uma conta salário")) {
+//			upResult(MASSA, "CPF vinculado possui uma conta salário -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<CPF POSSUI UMA CONTA SALÁRIO>");
+//		}
+//		// Van Gogh Direct
+//		if (translatedText.contains("van gogh direct")) {
+//			upResult(MASSA,
+//					"Segmento errado Van Gogh Direct -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
+//					"<SEGMENTO ERRADO -- VAN GOGH DIRECT>");
+//		}
+//		// Valida se o CPF vinculado possuí mais de uma conta, tanto corrente como
+//		// poupança
+//		if (!scenario.contains("clientecommaisdeumacontacorrente") && 
+//			  !scenario.contains("clientecommultiplascontas") && 
+//			  	!scenario.contains("clientenaocorrentista") && 
+//			  	   !scenario.contains("clientecommaisdeumaconta") && 
+//			  	     !scenario.contains("clientenãocorrentistaecommaisdeumacontapoupança") && 
+//			  	       !scenario.contains("multiplascontascorrenteepoupança")
+//		    ) {
+//			if (translatedText.contains("possui") &&  translatedText.contains("mais de") && translatedText.contains("conta") 
+//					&& (!translatedText.contains("cheques") && !translatedText.contains("compensados"))) {
+//				upResult(
+//						MASSA, "CPF com mais de uma conta-poupança ou conta-corrente -- Texto Tarduzido: '"
+//								+ translatedText + "' -- CPF: " + cpf,
+//						"<CPF COM MAIS DE UMA CONTA POUNPANÇA OU CORRENTE>");
+//			}
+//		}
+//		// Se os cenários de pagamento de fatura não tiver nehuma fatura para pagamento
+//		if ((scenario.contains("mínimoeototal") || 
+//			 scenario.contains("minimoeototal") || 
+//			  scenario.contains("minimodafatura") || 
+//			   scenario.contains("mínimodafatura") || 
+//			    scenario.contains("totaldafatura") || 
+//			     scenario.contains("faturacartãodecrédito")) && (scenario.contains("consulta"))
+//		   ) {
+//			if (translatedText.contains("não possui nenhum saldo devedor para fatura") ||
+//				 (translatedText.contains("não possui") && translatedText.contains("saldo devedor"))
+//			   ) {
+//				upResult(MASSA,
+//						"CPF não possui nenhum saldo devedor para pagamento de fatura -- Texto Traduzido: '"
+//								+ translatedText + "' -- CPF: " + cpf,
+//						"<CPF NÃO POSSUI NENHUMA FATURA PARA PAGAMENTO>");
+//
+//			}
+//		}
+//		// Se o cenáriio for Select e não for verbalizado
+//		if ((!translatedText.contains("select")) && scenario.contains("select")
+//				&& translatedText.contains("agilizar o atendimento") && translatedText.contains("por favor")
+//				&& (translatedText.contains("senha") || translatedText.contains("saldo"))
+//				&& (!scenario.contains("clientenãocorrentista") && !scenario.contains("clientecommultiplascontas")
+//						&& !scenario.contains("monoprodutista"))) {
+//			upResult(MASSA, "Segmento errado, cenário vinculado é Select -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO É SELECT>");
+//		}
+//		// Se o cenáriio não for Select
+//		if (translatedText.contains("select") && (!scenario.contains("select"))) {
+//			upResult(MASSA, "Segmento errado, cenário vinculado NÃO é Select -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO NÃO É SELECT>");
+//		}
+//		// Se o cenáriio for Van Gogh e não for verbalizado
+//		if ((!translatedText.contains("van gogh")) && scenario.contains("vangogh")
+//				&& translatedText.contains("agilizar o atendimento") && translatedText.contains("por favor")
+//				&& (translatedText.contains("senha") || translatedText.contains("saldo"))
+//				&& (!scenario.contains("clientenãocorrentista") && !scenario.contains("clientecommultiplascontas")
+//						&& !scenario.contains("monoprodutista"))) {
+//			upResult(MASSA, "Segmento errado, cenário vinculado é Van Gogh -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO É VAN GOGH>");
+//		}
+//		// Se o cenáriio não for Van Gogh
+//		if (translatedText.contains("vangogh") && (!scenario.contains("vangogh"))) {
+//			upResult(MASSA, "Segmento errado, cenário vinculado NÃO é Van Gogh -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<SEGMENTO ERRADO, CENÁRIO VINCULADO NÃO É VAN GOGH>");
+//		}
+//		// Boleto inválido
+//		if (translatedText.contains("não pode ser pago") || translatedText.contains("emissão de um novo boleto")) {
+//			upResult(MASSA,
+//					"Boleto inválido, verificar se o boleto está de acordo com a exigência do cenário -- Texto Traduzido: '"
+//							+ translatedText + "' -- CPF: " + cpf,
+//					"<NÃO FOI POSSÍVEL PAGAR O BOLETO>");
+//		}
+//		// Para os cenários de consulta fatura que não tiver fatura para consulta
+//		if ((scenario.contains("consulta") && scenario.contains("fatura"))
+//				&& (translatedText.contains("cartão de crédito") && 
+//						translatedText.contains("não possui nenhum saldo devedor") && 
+//							translatedText.contains("fatura"))
+//		   ) {
+//			upResult(MASSA, "Usuário sem fatura vinculado ao CPF ou fatura inválida para o teste -- Texto Traduzido: '"
+//					+ translatedText + "' -- CPF: " + cpf, "<CPF SEM FATURA VINCULADA PARA CONSULTA>");
+//		}
+//		// Sem lançamentos para consulta de extrato
+//		if (translatedText.contains("não encontrei lançamento")
+//				&& ((scenario.contains("extratodoultimodia") || scenario.contains("extratoporperiodo")
+//						|| scenario.contains("extratoporperíodo") || scenario.contains("consultaultimos7dias")))) {
+//			upResult(MASSA, "Sem lançamentos na conta para consulta de extrato -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<CPF SEM LANÇAMENTOS PARA CONSULTA DE EXTRATO>");
+//		}
+//		// Para cenários de desbloqueio de cheque e ele não está bloqueado
+//		if ((scenario.contains("desbloqueiodetalao") || scenario.contains("desbloqueartalaodecheques"))
+//				&& ((translatedText.contains("talão de cheque") || translatedText.contains("pelo número"))
+//						&& translatedText.contains("ele não está bloqueado"))) {
+//			upResult(MASSA,
+//					"Cheque vinculado não está bloqueado -- Texto Traduzido: '" + translatedText + "' -- CPF: " + cpf,
+//					"<CHEQUE NÃO ESTÁ BLOQUEADO>");
+//		}
+//
+//		// Para cenários de consulta de cpf com e sem cheques compensados
+//		if (scenario.contains("consulta") && (scenario.contains("chequescompensados"))) {
+//			//consulta com cheques compensados
+//			if ((scenario.contains("consulta")) && (scenario.contains("chequescompensados")) && 
+//				  (!scenario.contains("semchequescompensados")) && 
+//					 (translatedText.contains("não possui") || translatedText.contains("não foi compensado") || translatedText.contains("fazer outra consulta"))
+//			   ) {
+//				upResult(MASSA, "CPF vinculado não possui cheques compensados para consulta -- Texto Traduzido: '"
+//						+ translatedText + "' -- CPF: " + cpf, "<NÃO POSSUI CHEQUES COMPENSADOS>");
+//			}
+//			// consulta sem cheques compensados
+//			if ((scenario.contains("consulta")) && (scenario.contains("semchequescompensados"))
+//					&& (translatedText.contains("você possui")) || (translatedText.contains("no valor de"))) {
+//				upResult(MASSA, "CPF não pode ter cheque compensado -- Texto Traduzido: '"
+//						+ translatedText + "' -- CPF: " + cpf, "<CPF POSSUI CHEQUES COMPENSADOS>");
+//			}
+//		}
+//		// Para cenários que necessita que CPF não seja correntista
+//		if ((scenario.contains("clientenãocorrentista") || scenario.contains("clientenaocorrentista"))
+//				&& (translatedText.contains("sobre conta corrente") || translatedText.contains("conta corrente"))) {
+//			upResult(MASSA, "Cenário necessita que o CPF não seja correntista -- Texto Traduzido: '" + translatedText
+//					+ "' -- CPF: " + cpf, "<CPF POSSUI UMA CONTA CORRENTE>");
+//		}
 	}
 }

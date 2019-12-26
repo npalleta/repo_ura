@@ -20,8 +20,10 @@
 *.rar
 
 # Audio Extensions #
-*.flac
-*.wav
+# *.flac
+# *.wav
+/automacao-ura/automacao-ura-v4/null/audio/*.flac
+/automacao-ura/automacao-ura-v4/null/audio/*.wav
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import br.com.rsi.ura.chrome.ConnectionDriver;
+import br.com.rsi.ura.chrome.Driver;
 import br.com.rsi.ura.chrome.PageObjectDialerWEB;
 
 public class UtilsWeb extends ConnectionDriver {
@@ -65,6 +66,8 @@ public class UtilsWeb extends ConnectionDriver {
 		PageObjectDialerWEB pageObjectDialerWEB = new PageObjectDialerWEB();
 		getDriver().findElement(pageObjectDialerWEB.btnKeyboard()).click();
 		// presentAndClick(By.xpath("//button[@id='dial-pad-button']"));
+		// getDriver().findElement(pageWeb.btnKeyboard()).click();
+//		isNotPresentAndClick(By.xpath("//div[@class='dial-pad-keys']"), getPageDialerWeb().btnKeyboard());
 	}
 
 	/**

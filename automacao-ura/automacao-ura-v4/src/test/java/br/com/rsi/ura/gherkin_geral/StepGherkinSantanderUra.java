@@ -1,6 +1,7 @@
 package br.com.rsi.ura.gherkin_geral;
 
 import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.utils.UtilsWeb;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -121,7 +122,7 @@ public class StepGherkinSantanderUra {
 	
 	@When("^clico na opcao do menu: \"([^\"]*)\"$")
 	public void clico_na_opcao_do_menu(String arg1) {
-		this.stepsUra.opcaoDoMenu(arg1);
+		utilsWebSantander.clicarDiscadorCelular(arg1);
 	}
 	
 	@When("^clico nos numeros do 'cvv'$")
@@ -306,6 +307,25 @@ public class StepGherkinSantanderUra {
 	@When("^clico os numeros da data final da viagem$")
 	public void clico_os_numeros_da_data_final_da_viagem() {
 		this.stepsUra.validacaoDataFimParaUsoNoExterior();
+	}
+	
+	private UtilsWeb utilsWebSantander = new UtilsWeb();
+	@When("^digito o número \"([^\"]*)\" \"([^\"]*)\"$")
+	public void digito_o_número_do(String arg1, String arg2) throws Throwable {
+		switch (arg1) {
+		case "do EC":
+			utilsWebSantander.clicarTeclado();
+			utilsWebSantander.clicarDiscadorCelular(arg2);
+			break;
+		default:
+			utilsWebSantander.clicarDiscadorCelular(arg2);
+			break;
+		}
+	}
+	
+	@When("^digito \"([^\"]*)\"$")
+	public void digito(String arg1) throws Throwable {
+	    this.stepsUra.digito(arg1);
 	}
 	
 }

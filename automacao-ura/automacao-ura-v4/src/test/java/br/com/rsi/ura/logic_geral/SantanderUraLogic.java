@@ -138,9 +138,9 @@ public class SantanderUraLogic extends ConnectionDriver {
 	}
 
 	public void menuComTextoEID(String arg1, String arg2) {
-		UtilsUra.sleep(7000, "Coletando e validando TEXTO e ID...");
-		LOG.info("Validando opcao inicial, texto esperado >>> " + arg1);
-		recLogic.fraseologiaComValidacao(arg1, Integer.valueOf(arg2), 0, 4500, 10);
+//		UtilsUra.sleep(7000, "Coletando e validando TEXTO e ID...");
+//		LOG.info("Validando opcao inicial, texto esperado >>> " + arg1);
+		recLogic.fraseologiaComValidacao(arg1, Integer.valueOf(arg2), 0, 0, 0);
 	}
 
 	public void posicaoCartaoDeSeguranca(String arg1, int arg2) {
@@ -1055,6 +1055,24 @@ public class SantanderUraLogic extends ConnectionDriver {
 		} else {
 			LOG.info("FALSE - Realizando Ação: CLICAR > " + falseClico + " - MOTIVO: " + msg2);
 			utilsWebSantander.clicarDiscadorCelular(falseClico);
+		}
+	}
+	
+	public void digito_o_número_do(String arg1) throws Throwable {
+		utilsWebSantander.clicarTeclado();
+//		sendKeys(getPageDialerWeb().txtDialer(), arg1);
+		utilsWebSantander.clicarDiscadorCelular(arg1);
+		
+	}
+	
+	public void digito(String arg1) throws Throwable {
+		switch (arg1) {
+		case "data inválida":
+					utilsWebSantander.clicarDiscadorCelular(arg1);
+			break;
+
+		default:
+			break;
 		}
 	}
 } 

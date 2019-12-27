@@ -128,7 +128,7 @@ public class BeforeAfter {
 			SaveResultTestCase.finalizaBD(scenario);
 			SaveResultTestCase.finalizarJson(scenario);
 		}
-
+		new UtilsWeb().finalizaLigacao();
 		LOG.info("END ------------------------------------------------------------------------------------------------>>\n");
 	}
 }

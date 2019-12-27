@@ -328,4 +328,9 @@ public class StepGherkinSantanderUra {
 	    this.stepsUra.digito(arg1);
 	}
 	
+	@When("^espero alguns segundos \"([^\"]*)\"$")
+	public void espero_alguns_segundos(String arg1) throws Throwable {
+	    this.stepsUra.digito(arg1);
+	}
+	
 }

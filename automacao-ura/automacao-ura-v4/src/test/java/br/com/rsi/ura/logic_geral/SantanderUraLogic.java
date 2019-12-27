@@ -1075,4 +1075,9 @@ public class SantanderUraLogic extends ConnectionDriver {
 			break;
 		}
 	}
+	
+	public void espero_alguns_segundos(String arg1) throws Throwable {
+	    int arg1num = Integer.parseInt(arg1);
+		Thread.sleep(arg1num);
+	}
 } 

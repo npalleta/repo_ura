@@ -1,5 +1,4 @@
-#language:en
-Feature: Funcionalidade URA_CT016 - Opcao Invalida
+Feature: Funcionalidade URA_CT016 - Opção Inválida
 
   Background: 
     #Given inicializo o 'Relatorio de Dados'

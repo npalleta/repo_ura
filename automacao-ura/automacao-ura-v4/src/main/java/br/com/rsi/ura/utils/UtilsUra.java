@@ -1,8 +1,11 @@
 package br.com.rsi.ura.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -32,42 +35,41 @@ public class UtilsUra {
 	private static final Logger LOG = Logger.getLogger(UtilsUra.class);
 	private AssertAudioService assertAudioService = new AssertAudioServiceImpl();
 	private ReportTest reportTestUtils = new ReportTest();
-	
+
 	/**
-	 * @param regex --> Expressão regular para validação.
+	 * @param regex   --> Expressão regular para validação.
 	 * @param validar --> Texto que deseja validar a expressão.
 	 * @return Valor Boolean: Se foi encontrado a expressão.
 	 */
 	public static boolean regularExpressionGenerator(String regex, String validar) {
 		Pattern validaRegex = Pattern.compile(regex);
 		Matcher textoValida = validaRegex.matcher(validar);
-		if(textoValida.find()) {
+		if (textoValida.find()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @param formatHour --> Formato da hora.
-	 * @param formatDay --> Formato do dia.
+	 * @param formatDay  --> Formato do dia.
 	 * @return Data ou Hora, ou ambos indentado como String.
-	 * @category Método genérico que retorna a data ou a hora ou ambos, caso passado valores nulos retorna ambos indentados
-	 * com o formato "HH:mm;dd/MM/yyyy". Caso opte por um dos parâmetros, passar o outro como nulo.
+	 * @category Método genérico que retorna a data ou a hora ou ambos, caso passado
+	 *           valores nulos retorna ambos indentados com o formato
+	 *           "HH:mm;dd/MM/yyyy". Caso opte por um dos parâmetros, passar o outro
+	 *           como nulo.
 	 */
 	public static String date(String formatHour, String formatDay) {
 		Date dataHora = new Date();
-		
-		if(formatHour != null && (!formatHour.isEmpty()) &&
-			 formatDay != null && (!formatDay.isEmpty())) {
+
+		if (formatHour != null && (!formatHour.isEmpty()) && formatDay != null && (!formatDay.isEmpty())) {
 			String hora = new SimpleDateFormat(formatHour).format(dataHora);
 			String data = new SimpleDateFormat(formatDay).format(dataHora);
 			return hora + ";" + data;
-		} else if (formatHour != null && (!formatHour.isEmpty()) &&
-					  (formatDay == null)) {
+		} else if (formatHour != null && (!formatHour.isEmpty()) && (formatDay == null)) {
 			return new SimpleDateFormat(formatHour).format(dataHora);
-		} else if (formatDay != null && (!formatDay.isEmpty()) && 
-					  (formatHour == null)) {
+		} else if (formatDay != null && (!formatDay.isEmpty()) && (formatHour == null)) {
 			return new SimpleDateFormat(formatDay).format(dataHora);
 		} else {
 			String hora = new SimpleDateFormat("HH:mm").format(dataHora);
@@ -75,10 +77,11 @@ public class UtilsUra {
 			return hora + ";" + data;
 		}
 	}
-	
+
 	/**
 	 * @param time --> Tempo de espera.
-	 * @param msg --> Mensagem caso tenha um informativo específico, caso contrário pode ser passado este parâmetro como NULL ou "". 
+	 * @param msg  --> Mensagem caso tenha um informativo específico, caso contrário
+	 *             pode ser passado este parâmetro como NULL ou "".
 	 */
 	public static void sleep(int time, String msg) {
 		try {
@@ -105,9 +108,10 @@ public class UtilsUra {
 		}
 		return properties;
 	}
-	
+
 	/**
-	 * @return HoraString: Retorna a Hora + Data, neste formato (YYYY-MM-DDTHH:MM:SS.MMM).
+	 * @return HoraString: Retorna a Hora + Data, neste formato
+	 *         (YYYY-MM-DDTHH:MM:SS.MMM).
 	 */
 	public static String dateNoFormat() {
 		LocalDateTime hora = LocalDateTime.now();
@@ -262,12 +266,12 @@ public class UtilsUra {
 	}
 
 	/**
-	 * @param textoEsperado --> Texto da para validação na Fraseologia.
-	 * @param acaa --> Valor setado com base na 'acao'.
+	 * @param textoEsperado  --> Texto da para validação na Fraseologia.
+	 * @param acaa           --> Valor setado com base na 'acao'.
 	 * @param fraseTraduzida --> Fraseologia da gravação da URA.
-	 * @param testePassou --> Valor setado em relação se o teste foi executado.
-	 * @param possiveisIds --> Possível ID do cenário.
-	 * @param absolutePath --> Tempo de execução.
+	 * @param testePassou    --> Valor setado em relação se o teste foi executado.
+	 * @param possiveisIds   --> Possível ID do cenário.
+	 * @param absolutePath   --> Tempo de execução.
 	 */
 	public void populaDadosRelatorio(String textoEsperado, String acao, String fraseTraduzida, Boolean testePassou,
 			List<String> possiveisIds, String absolutePath) {
@@ -280,8 +284,9 @@ public class UtilsUra {
 
 		report.getDados().setFraseTraduzida(fraseTraduzida);
 		report.getDados().setTesteAssert(testePassou);
-		report.getDados().setPercentualAcerto(assertAudioService.calculaPorcentagemDeAcerto(textoEsperado, fraseTraduzida).doubleValue());
-		
+		report.getDados().setPercentualAcerto(
+				assertAudioService.calculaPorcentagemDeAcerto(textoEsperado, fraseTraduzida).doubleValue());
+
 		if (possiveisIds != null) {
 			report.getDados().setPossiveisIds(possiveisIds.toString().replace('[', ' ').replace(']', ' '));
 		} else {
@@ -297,10 +302,80 @@ public class UtilsUra {
 	}
 
 	/**
-	 * Limpa os os campos 'Tipo Erro', 'Erro' e 'Data Hora' na planilha 'Relatório Por Cenário'.
+	 * Limpa os os campos 'Tipo Erro', 'Erro' e 'Data Hora' na planilha 'Relatório
+	 * Por Cenário'.
 	 */
 	public static void clearInfoCenario() {
 		RelatorioValues.setTipoErro("");
 		RelatorioValues.setErro("");
+	}
+
+	/**
+	 * Commandos CMD.
+	 */
+	public static void cmdCommand() {
+		try {
+			Process process = Runtime.getRuntime().exec("cmd /c report.bat", null,
+					new File("C:\\UraSantander\\reports\\"));
+
+			StringBuilder output = new StringBuilder();
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				output.append(line + "\n");
+			}
+
+			int exitVal = process.waitFor();
+			if (exitVal == 0) {
+				System.out.println("Success!");
+				System.out.println(output);
+				System.exit(0);
+			} else {
+				// ...
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void cmdCommand(String... params) {
+		
+		String execute = "";
+		
+		try {
+			for (String command : params) {
+				execute = command.concat(command);
+			}
+
+			Process process = Runtime.getRuntime().exec(execute);
+
+			StringBuilder output = new StringBuilder();
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				output.append(line + "\n");
+			}
+
+			int exitVal = process.waitFor();
+			if (exitVal == 0) {
+				System.out.println("Success!");
+				System.out.println(output);
+				System.exit(0);
+			} else {
+				// ...
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

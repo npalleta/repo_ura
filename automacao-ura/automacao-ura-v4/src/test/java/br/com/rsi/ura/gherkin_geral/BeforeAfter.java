@@ -129,6 +129,8 @@ public class BeforeAfter {
 			SaveResultTestCase.finalizarJson(scenario);
 		}
 		new UtilsWeb().finalizaLigacao();
+		UtilsUra.cmdCommand("cmd", "/c", "start chrome ", " file:///C:/Teste/repo_ura_cielo/automacao-ura/automacao-ura-v4/target/cucumber-reports/index.html");
+		UtilsUra.cmdCommand();
 		LOG.info("END ------------------------------------------------------------------------------------------------>>\n");
 	}
 }

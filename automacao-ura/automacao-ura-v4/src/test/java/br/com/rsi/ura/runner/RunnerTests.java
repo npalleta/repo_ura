@@ -1,9 +1,10 @@
 package br.com.rsi.ura.runner;
 
 import java.time.LocalDateTime;
-
+	
 import org.junit.runner.JUnitCore;
 
+import br.com.rsi.ura.suiteTeste.geral.RelatorioGeral;
 import br.com.rsi.ura.suiteTeste.geral.SuiteTestesGerais;
 
 public class RunnerTests {
@@ -13,6 +14,7 @@ public class RunnerTests {
 		System.out.println("Batery runs: " + LocalDateTime.now());
 		JUnitCore junit = new JUnitCore();
 		junit.run(SuiteTestesGerais.class);
+		junit.run(RelatorioGeral.class);
 
 		// LocalDateTime amanha01am = LocalDateTime.now();
 		// LocalDateTime amanha01am = LocalDateTime.now().plusDays(1).withHour(1);

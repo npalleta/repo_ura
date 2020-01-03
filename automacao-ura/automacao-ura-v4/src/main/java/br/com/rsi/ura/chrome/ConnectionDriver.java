@@ -35,8 +35,11 @@ public class ConnectionDriver extends Driver {
 		chromeOptions.setExperimentalOption("prefs", prefs);
 		chromeOptions.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 		chromeOptions.setExperimentalOption("useAutomationExtension", false);
-		chromeOptions.addArguments("--disable-extensions-file-access-check", "--disable-popup-blocking",
-				"--reduce-security-for-testing", "--start-maximized", "--use-fake-ui-for-media-stream");
+		chromeOptions.addArguments("--disable-extensions-file-access-check",
+								   "--disable-popup-blocking",
+								   "--reduce-security-for-testing",
+								   "--start-maximized",
+								   "--use-fake-ui-for-media-stream");
 		System.setProperty("webdriver.chrome.driver", "C:\\UraSantander\\properties\\chromedriver.exe");
 
 		setDriver(new ChromeDriver(chromeOptions));

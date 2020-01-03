@@ -1,21 +1,12 @@
 package br.com.rsi.ura.gherkin_geral;
 
-import java.io.IOException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.junit.Assume;
+import org.junit.AfterClass;
 
-import br.com.rsi.ura.configuration.GerenciadorDePropriedades;
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
 import br.com.rsi.ura.saveResult.SaveResultTestCase;
-import br.com.rsi.ura.serviceJson.jsonData.Json;
-import br.com.rsi.ura.sheets.massa.GerenciadorDaPlanilhaDeMassa;
-import br.com.rsi.ura.sheets.massa.PlanilhaDTO;
-import br.com.rsi.ura.sheets.relatorioPorCenario.GerenciadorDeRelatorioPorCenario;
-import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.sheets.reportLog.ValuesDateLog;
-import br.com.rsi.ura.utils.FileUtil;
 import br.com.rsi.ura.utils.UtilsUra;
 import br.com.rsi.ura.utils.UtilsWeb;
 import cucumber.api.Scenario;
@@ -67,70 +58,89 @@ public class BeforeAfter {
 				+ "         \\/____/                  \\/____/                  \\/____/                  \\/____/        \r\n"
 				+ "");
 
-		/*SantanderUraLogic.contador = 0;
-		SantanderUraLogic.numeroDocartao = 1;
-		PlanilhaDTO.TipoSenha = null;*/
+		/*
+		 * SantanderUraLogic.contador = 0; SantanderUraLogic.numeroDocartao = 1;
+		 * PlanilhaDTO.TipoSenha = null;
+		 */
 		String nomeCenario = scenario.getName();
 		// String id = UtilsUra.lerID(nomeCenario);
 		// RelatorioValues.setIp(UtilsUra.capturaIP());
-		
+
 		LOG.info("---- INICIANDO CENÁRIO: " + nomeCenario + " ----");
 		LOG.info("---- Hora do inicio da Execução: " + dateHour[0] + " - " + dateHour[1] + " ----");
-		// LOG.info("---- Verificando se o cenário de ID " + id + " já rodou com sucesso... ----");
-		
+		// LOG.info("---- Verificando se o cenário de ID " + id + " já rodou com
+		// sucesso... ----");
+
 		SaveResultTestCase.rodouNao();
 		// boolean jaDeuCerto = GerenciadorDeRelatorioPorCenario.seraQueJaDeuCerto(id);
-		
-		/*if (jaDeuCerto) {
-			LOG.info("---- O cenário " + id + " já está OK, então será PULADO. ----");
-			UtilsUra.clearInfoCenario();
-		} else {
-			LOG.info("---- O cenário " + id + " ainda NÃO ESTÁ OK, então será EXECUTADO. ----");
-			UtilsUra.clearInfoCenario();
-		}
-		Assume.assumeFalse(GerenciadorDeRelatorioPorCenario.seraQueJaDeuCerto(id));
 
-		GerenciadorDaPlanilhaDeMassa.lerPlanilhaID(id, nomeCenario);
-		GerenciadorDePropriedades gerenciadorDeProp = GerenciadorDePropriedades.getInstance();
-		String caminhoArquivos = gerenciadorDeProp.getOpenbdtArquivosDados();
-		long diasExpurgo = gerenciadorDeProp.getOpenbdtUraDiasExpurgo();
-
-		System.setProperty("openbdt.data.files", caminhoArquivos);
-		LOG.info("Excluindo arquivos gerados a mais de " + diasExpurgo + " dia(s).");
-		try {
-			FileUtil.deleteOlderFiles(diasExpurgo, caminhoArquivos + "/audio");
-		} catch (IOException e) {
-			LOG.info("---- Erro no expurgo dos arquivos de áudio em: " + caminhoArquivos + "/audio ----");
-			LOG.error(e.getMessage());
-		}*/
+		/*
+		 * if (jaDeuCerto) { LOG.info("---- O cenário " + id +
+		 * " já está OK, então será PULADO. ----"); UtilsUra.clearInfoCenario(); } else
+		 * { LOG.info("---- O cenário " + id +
+		 * " ainda NÃO ESTÁ OK, então será EXECUTADO. ----");
+		 * UtilsUra.clearInfoCenario(); }
+		 * Assume.assumeFalse(GerenciadorDeRelatorioPorCenario.seraQueJaDeuCerto(id));
+		 * 
+		 * GerenciadorDaPlanilhaDeMassa.lerPlanilhaID(id, nomeCenario);
+		 * GerenciadorDePropriedades gerenciadorDeProp =
+		 * GerenciadorDePropriedades.getInstance(); String caminhoArquivos =
+		 * gerenciadorDeProp.getOpenbdtArquivosDados(); long diasExpurgo =
+		 * gerenciadorDeProp.getOpenbdtUraDiasExpurgo();
+		 * 
+		 * System.setProperty("openbdt.data.files", caminhoArquivos);
+		 * LOG.info("Excluindo arquivos gerados a mais de " + diasExpurgo + " dia(s).");
+		 * try { FileUtil.deleteOlderFiles(diasExpurgo, caminhoArquivos + "/audio"); }
+		 * catch (IOException e) {
+		 * LOG.info("---- Erro no expurgo dos arquivos de áudio em: " + caminhoArquivos
+		 * + "/audio ----"); LOG.error(e.getMessage()); }
+		 */
 	}
-	
+
 	/**
 	 * @param scenario --> Nome do cenário.
-	 * @category --> Responsável por executar as tarefas após o teste e salvar o resultado no BD e JSON.
+	 * @category --> Responsável por executar as tarefas após o teste e salvar o
+	 *           resultado no BD e JSON.
 	 */
 	@After
 	public void finish(Scenario scenario) {
 		LOG.info("---- FINALIZANDO APLICAÇÃO ----");
-		if (SaveResultTestCase.getRodou()) {
-			LOG.info(">>>---" + SaveResultTestCase.getRodou());
-			Json.setStatusScenario((scenario.getStatus().equals("passed") ? true : false));
-			RelatorioValues.setDataHora("Data: " + dateHour[1] + " --Hr Inicio: " + dateHour[0]);
-			new UtilsWeb().finalizaLigacao();
-			LOG.info("---- Salvando o resultado do cenário. ----");
-			LOG.info("---- Rodou? ---- " + SaveResultTestCase.getRodou());
-			LOG.info("---- Passou? ---- " + Json.getStatusScenario());
-			LOG.info("Cenário Executado - "  + scenario.getName() + " - " + scenario.getStatus() + " - " + dateHour[1] + " - " + dateHour[0]);
-			ValuesDateLog.setDataFinal(new Date().toString());
-			LOG.info(ValuesDateLog.getDataFinal());
-
-			// GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(), Json.getStatusScenario(), scenario.getName(), SaveResultTestCase.getDirAudio());
-			SaveResultTestCase.finalizaBD(scenario);
-			SaveResultTestCase.finalizarJson(scenario);
-		}
+		/*
+		 * if (SaveResultTestCase.getRodou()) { LOG.info(">>>---" +
+		 * SaveResultTestCase.getRodou());
+		 * Json.setStatusScenario((scenario.getStatus().equals("passed") ? true :
+		 * false)); RelatorioValues.setDataHora("Data: " + dateHour[1] +
+		 * " --Hr Inicio: " + dateHour[0]); new UtilsWeb().finalizaLigacao();
+		 * LOG.info("---- Salvando o resultado do cenário. ----");
+		 * LOG.info("---- Rodou? ---- " + SaveResultTestCase.getRodou());
+		 * LOG.info("---- Passou? ---- " + Json.getStatusScenario());
+		 * LOG.info("Cenário Executado - " + scenario.getName() + " - " +
+		 * scenario.getStatus() + " - " + dateHour[1] + " - " + dateHour[0]);
+		 * ValuesDateLog.setDataFinal(new Date().toString());
+		 * LOG.info(ValuesDateLog.getDataFinal());
+		 */
+		// GerenciadorDeRelatorioPorCenario.escreverResultado(PlanilhaDTO.getIdCenario(),
+		// Json.getStatusScenario(), scenario.getName(),
+		// SaveResultTestCase.getDirAudio());
+		// SaveResultTestCase.finalizaBD(scenario);
+		// SaveResultTestCase.finalizarJson(scenario);
+		// }
 		new UtilsWeb().finalizaLigacao();
-		UtilsUra.cmdCommand("cmd", "/c", "start chrome ", " file:///C:/Teste/repo_ura_cielo/automacao-ura/automacao-ura-v4/target/cucumber-reports/index.html");
-		UtilsUra.cmdCommand();
+		// UtilsUra.cmdCommandExecReport();
+		// UtilsUra.cmdCommand("cmd.exe", "/C report.bat",
+		// "C:\\UraSantander\\reports\\");
+		// UtilsUra.cmdCommand("cmd", "/c", "start chrome ", "
+		// C:/Teste/repo_ura_cielo/automacao-ura/automacao-ura-v4/target/cucumber-reports/index.html");
 		LOG.info("END ------------------------------------------------------------------------------------------------>>\n");
+	}
+
+	@org.junit.After
+	public void tearDown() {
+		LOG.info("BEFORE END ---------");
+	}
+
+	@AfterClass
+	public void tearDown2() {
+		LOG.info("BEFORE END 2------------");
 	}
 }

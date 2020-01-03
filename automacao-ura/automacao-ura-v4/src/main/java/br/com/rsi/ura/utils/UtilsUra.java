@@ -313,69 +313,74 @@ public class UtilsUra {
 	/**
 	 * Commandos CMD.
 	 */
-	public static void cmdCommand() {
+	public static void cmdCommand(String... args) {
+
+		if (args.length < 1) {
+			System.out.println("USAGE: java cmd command line...");
+			System.exit(1);
+		}
+
 		try {
-			Process process = Runtime.getRuntime().exec("cmd /c report.bat", null,
-					new File("C:\\UraSantander\\reports\\"));
+			Runtime rt = Runtime.getRuntime();
+			System.out.println("Command " + args[0] + " " + args[1] + " " + args[2]);
+			Process proc = rt.exec(args[0] + " " + args[1] + " " + args[2]);
+			StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), "ERROR");
+			StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), "OUTPUT");
+			errorGobbler.start();
+			outputGobbler.start();
+			int exitVal = proc.waitFor();
+			System.out.println("ExitValue: " + exitVal);
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
 
-			StringBuilder output = new StringBuilder();
+	public static void main(String[] args) {
+		cmdCommandExecReport();
+	}
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	public static void cmdCommandExecReport() {
 
+		try {
+			ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\testes\\reports\" && report.bat");
+			builder.redirectErrorStream(true);
+			Process p = builder.start();
+			BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line;
-			while ((line = reader.readLine()) != null) {
-				output.append(line + "\n");
+			while (true) {
+				line = r.readLine();
+				if (line == null) {
+					break;
+				}
+				System.out.println(line);
 			}
-
-			int exitVal = process.waitFor();
-			if (exitVal == 0) {
-				System.out.println("Success!");
-				System.out.println(output);
-				System.exit(0);
-			} else {
-				// ...
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void cmdCommand(String... params) {
-		
-		String execute = "";
-		
-		try {
-			for (String command : params) {
-				execute = command.concat(command);
-			}
-
-			Process process = Runtime.getRuntime().exec(execute);
-
-			StringBuilder output = new StringBuilder();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-			String line;
-			while ((line = reader.readLine()) != null) {
-				output.append(line + "\n");
-			}
-
-			int exitVal = process.waitFor();
-			if (exitVal == 0) {
-				System.out.println("Success!");
-				System.out.println(output);
-				System.exit(0);
-			} else {
-				// ...
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * public static void cmdCommand(String... params) {
+	 * 
+	 * String execute = "";
+	 * 
+	 * try { for (String command : params) { execute = command.concat(command); }
+	 * 
+	 * Process process = Runtime.getRuntime().exec(execute);
+	 * 
+	 * StringBuilder output = new StringBuilder();
+	 * 
+	 * BufferedReader reader = new BufferedReader(new
+	 * InputStreamReader(process.getInputStream()));
+	 * 
+	 * String line; while ((line = reader.readLine()) != null) { output.append(line
+	 * + "\n"); }
+	 * 
+	 * int exitVal = process.waitFor(); if (exitVal == 0) {
+	 * System.out.println("Success!"); System.out.println(output); System.exit(0); }
+	 * else { System.out.println("Exit: " + exitVal + " - Failed!"); }
+	 * 
+	 * } catch (InterruptedException e) { e.printStackTrace(); } catch (IOException
+	 * e) { e.printStackTrace(); } }
+	 */
 }

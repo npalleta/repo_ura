@@ -8,7 +8,7 @@ Feature: Funcionalidade URA_CT008 - Não digitar nada
   Scenario: URA_CT008
     When um dos textos "você ligou;nosso cliente" for validado, com o tempo de execução "30000" em milissegundos
     And digito o número "do EC" "2007733832"
-    And um dos textos "assuntos;financeiros;antecipação" for validado, com o tempo de execução "30000" em milissegundos
+    And um dos textos "assuntos;financeiros;antecipação;relatório de vendas;venda" for validado, com o tempo de execução "30000" em milissegundos
     And clico na opcao do menu: "1"
     And um dos textos "antecipação;recebidos;receber;conta" for validado, com o tempo de execução "15000" em milissegundos
     And clico na opcao do menu: "2"

@@ -3,7 +3,7 @@ package br.com.rsi.ura.teste.cielo.CT016;
 import org.apache.log4j.Logger;
 
 import br.com.rsi.ura.fraseologia.ValidacaoFraseologia;
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.logic_geral.CieloUraLogic;
 import br.com.rsi.ura.sheets.massa.PlanilhaDTO;
 import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.teste.transferencias_recursos.TransferenciasRecursosLogic;

@@ -16,9 +16,9 @@ import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.utils.UtilsUra;
 import br.com.rsi.ura.utils.UtilsWeb;
 
-public class SantanderUraLogic extends ConnectionDriver {
+public class CieloUraLogic extends ConnectionDriver {
 
-	private final Logger LOG = Logger.getLogger(SantanderUraLogic.class);
+	private final Logger LOG = Logger.getLogger(CieloUraLogic.class);
 	private ValidacaoFraseologia recLogic = new ValidacaoFraseologia();
 	private UtilsWeb utilsWebSantander = new UtilsWeb();
 	public boolean tentativa = true;

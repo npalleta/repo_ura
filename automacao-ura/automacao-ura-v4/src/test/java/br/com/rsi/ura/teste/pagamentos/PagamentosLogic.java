@@ -3,7 +3,7 @@ package br.com.rsi.ura.teste.pagamentos;
 import org.apache.log4j.Logger;
 
 import br.com.rsi.ura.fraseologia.ValidacaoFraseologia;
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.logic_geral.CieloUraLogic;
 import br.com.rsi.ura.sheets.massa.PlanilhaDTO;
 import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.utils.UtilsUra;
@@ -18,7 +18,7 @@ public class PagamentosLogic {
 	private String texto;
 	
 	private ValidacaoFraseologia recPtg = new ValidacaoFraseologia();
-	private SantanderUraLogic logicPgt = new SantanderUraLogic();
+	private CieloUraLogic logicPgt = new CieloUraLogic();
 	private UtilsWeb pgtWeb = new UtilsWeb();
 	
 	private String mensagemInformativaPgt() {

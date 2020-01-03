@@ -1,6 +1,6 @@
 package br.com.rsi.ura.gherkin_geral;
 
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.logic_geral.CieloUraLogic;
 import br.com.rsi.ura.utils.UtilsWeb;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,9 +11,9 @@ import cucumber.api.java.en.When;
  * @author romulo.lacerda
  * @category --> Classe resposável por executar todos os métodos de gherkin genéricos da URA.
  */
-public class StepGherkinSantanderUra {
+public class StepGherkinCieloUra {
 
-	private SantanderUraLogic stepsUra = new SantanderUraLogic();
+	private CieloUraLogic stepsUra = new CieloUraLogic();
 	
 	@When("^tradução contém \"([^\"]*)\" \\? TRUE\\( \"([^\"]*)\" - MSG: \"([^\"]*)\" \\) -- FALSE\\( \"([^\"]*)\" - MSG: \"([^\"]*)\" \\) com execução de \"([^\"]*)\" milissegundos$")
 	public void tradução_contém_TRUE_FALSE_com_execução_de_milissegundos(String textoParaSerValidado, String trueClico, String msg1, String falseClico, String msg2, int tempoDeGravacao) {

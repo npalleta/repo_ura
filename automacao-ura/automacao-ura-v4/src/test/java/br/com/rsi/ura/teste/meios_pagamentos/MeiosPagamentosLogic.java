@@ -3,7 +3,7 @@ package br.com.rsi.ura.teste.meios_pagamentos;
 import org.apache.log4j.Logger;
 
 import br.com.rsi.ura.fraseologia.ValidacaoFraseologia;
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.logic_geral.CieloUraLogic;
 import br.com.rsi.ura.sheets.massa.PlanilhaDTO;
 import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.utils.UtilsUra;
@@ -18,7 +18,7 @@ public class MeiosPagamentosLogic {
 	private String texto;
 	
 	private ValidacaoFraseologia recMeioPgt = new ValidacaoFraseologia();
-	private SantanderUraLogic logicMeiosPgmt = new SantanderUraLogic();
+	private CieloUraLogic logicMeiosPgmt = new CieloUraLogic();
 	private UtilsWeb meioPgtWeb = new UtilsWeb();
 	
 	public void menuPagamentoDeFatura() {

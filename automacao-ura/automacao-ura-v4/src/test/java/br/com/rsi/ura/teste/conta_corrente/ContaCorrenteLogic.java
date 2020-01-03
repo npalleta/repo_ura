@@ -3,7 +3,7 @@ package br.com.rsi.ura.teste.conta_corrente;
 import org.apache.log4j.Logger;
 
 import br.com.rsi.ura.fraseologia.ValidacaoFraseologia;
-import br.com.rsi.ura.logic_geral.SantanderUraLogic;
+import br.com.rsi.ura.logic_geral.CieloUraLogic;
 import br.com.rsi.ura.sheets.massa.PlanilhaDTO;
 import br.com.rsi.ura.sheets.relatorioPorCenario.RelatorioValues;
 import br.com.rsi.ura.utils.UtilsWeb;
@@ -12,7 +12,7 @@ public class ContaCorrenteLogic {
 
 	private final Logger LOG = Logger.getLogger(ContaCorrenteLogic.class);
 	private ValidacaoFraseologia fraseContaCorrente = new ValidacaoFraseologia();
-	private SantanderUraLogic logicContaCorrente = new SantanderUraLogic();
+	private CieloUraLogic logicContaCorrente = new CieloUraLogic();
 	private UtilsWeb utilsWebContaCorrente = new UtilsWeb();
 
 	public void numerosTalaoDeCheque() {

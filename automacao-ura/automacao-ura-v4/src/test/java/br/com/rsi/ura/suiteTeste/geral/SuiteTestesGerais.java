@@ -11,12 +11,12 @@ import cucumber.api.junit.Cucumber;
 		features = { "src\\test\\java\\br\\com\\rsi\\ura\\teste" }, 
 			glue = { "br.com.rsi.ura.gherkin_geral",
 					 "br.com.rsi.ura.teste.cielo.CT008",
-					 "br.com.rsi.ura.teste.cielo.CT016"
-				   }, 
+					 "br.com.rsi.ura.teste.cielo.CT016" }, 
 		  plugin = { "pretty",
 				  	 "json:target/cucumber-reports/Cucumber.json", 
-				  	 "junit:target/cucumber-reports/Cucumber.xml",
-					 "html:target/cucumber-reports" }, 
+				  	 "junit:target/cucumber-reports/Cucumber.xml"
+					 //"html:target/cucumber-reports" 
+				   }, 
 	  monochrome = true,
 	  		tags = { "@URA_CT016," + "@URA_CT008" })
 
